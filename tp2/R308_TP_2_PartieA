@@ -1,0 +1,44 @@
+def grille():
+    return [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
+
+g = grille()
+
+def afficher():
+    print("-------------")
+    for ligne in g:
+        print("| " + " | ".join(ligne) + " |")
+        print("-------------")
+
+def jouer(x, y, joueur):
+    if g[x][y] == " ":
+        g[x][y] = joueur
+        return True
+    return False
+
+def est_gagnant(j):
+    for i in range(3):
+        if g[i][0] == j and g[i][1] == j and g[i][2] == j:  # ligne i
+            return True
+        if g[0][i] == j and g[1][i] == j and g[2][i] == j:  # colonne i
+            return True
+    if g[0][0] == j and g[1][1] == j and g[2][2] == j:      # diagonale \
+        return True
+    if g[0][2] == j and g[1][1] == j and g[2][0] == j:      # diagonale /
+        return True
+    return False
+
+def est_plein():
+    for ligne in g:
+        if " " in ligne:
+            return False
+    return True
+
+# Programme principal (test)
+jouer(0, 0, "X")
+jouer(1, 1, "X")
+print(jouer(1, 1, "O"))   # False : case déjà prise
+jouer(2, 2, "X")
+afficher()
+print(est_gagnant("X"))   # True (diagonale)
+print(est_gagnant("O"))   # False
+print(est_plein())        # False
